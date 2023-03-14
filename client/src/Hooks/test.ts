@@ -22,9 +22,16 @@ export const useTest = () => {
     return res;
   };
 
+  const onTogle = async ({ id, done }: any) => {
+    const res: any = await patch(`memo/${id}`, {
+      done,
+    });
+    return res;
+  };
+
   const delTest = async ({ id }: any) => {
     const res: any = await del(`memo/${id}`);
     return res;
   };
-  return { getTest, delTest, postTest, patchTest };
+  return { getTest, delTest, postTest, patchTest, onTogle };
 };

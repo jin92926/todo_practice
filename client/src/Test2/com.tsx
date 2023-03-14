@@ -1,7 +1,10 @@
 import { useTest } from "Hooks/test";
 import React, { useCallback, useEffect, useState } from "react";
 
-const Sample = () => {
+import CommentList2 from "./commnetList2";
+import CommentForm2 from "./form1";
+
+const Sample1 = () => {
   const [test, setTest] = useState<any[]>([]);
   const { getTest, delTest, postTest, patchTest, onTogle } = useTest();
   const [inputValue, setInputValue] = useState("");
@@ -36,7 +39,7 @@ const Sample = () => {
     testData();
     setInputValue("");
   };
-  console.log(inputValue);
+
   const handleEdit = async (id: any, text: string) => {
     await patchTest({ id, text });
     setEditingId("");
@@ -53,63 +56,26 @@ const Sample = () => {
     );
     testData();
   };
-
-  // const handleChangeDone = async ({ id, done }: any) => {
-  //   await onTogle({ id, done: !done });
-  //   testData();
-  // };
+  console.log(test);
 
   return (
     <>
-      <form>
-        <input
-          type="text"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-        />
-        <button type="button" onClick={handleSubmit}>
-          Add
-        </button>
-      </form>
-      {test.map(({ id, text, done }) => (
-        <div key={id}>
-          {editingId === id ? (
-            <div>
-              <input
-                type="text"
-                value={text}
-                onChange={(e) =>
-                  setTest(
-                    test.map((item) =>
-                      item.id === id ? { ...item, text: e.target.value } : item,
-                    ),
-                  )
-                }
-              />
-              <button type="button" onClick={() => handleEdit(id, text)}>
-                Save
-              </button>
-              <button type="button" onClick={handleCancelEdit}>
-                Cancel
-              </button>
-            </div>
-          ) : (
-            <div onClick={() => setEditingId(id)}>
-              <div>{text}</div>
-              <div>{id}</div>
-              <div>{JSON.stringify(done)}</div>
-            </div>
-          )}
-          <button type="button" onClick={() => handleDeleteComment({ id })}>
-            Delete
-          </button>
-          {/* <button type="button" onClick={() => handleChangeDone({ id, done })}>
-            change
-          </button> */}
-        </div>
-      ))}
+      <CommentForm2
+        handleSubmit={handleSubmit}
+        setInputValue={setInputValue}
+        inputValue={inputValue}
+      />
+      <CommentList2
+        test={test}
+        editingId={editingId}
+        setTest={setTest}
+        handleEdit={handleEdit}
+        handleCancelEdit={handleCancelEdit}
+        setEditingId={setEditingId}
+        handleDeleteComment={handleDeleteComment}
+      />
     </>
   );
 };
 
-export default Sample;
+export default Sample1;
