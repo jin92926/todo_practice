@@ -1,11 +1,6 @@
 {
   "memo": [
     {
-      "id": 1,
-      "text": "되냐",
-      "done": false
-    },
-    {
       "id": 2,
       "text": "되냐",
       "done": false
@@ -28,11 +23,6 @@
     {
       "id": 8,
       "text": "ㄴㅇㄹㄴㅇ",
-      "done": false
-    },
-    {
-      "id": 9,
-      "text": "ㄴㅇㄹㄷ",
       "done": false
     },
     {
