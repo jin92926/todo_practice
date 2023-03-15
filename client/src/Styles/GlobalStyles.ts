@@ -20,8 +20,16 @@ body {
   background-color: ${({ theme }) => theme.colors.background_color};
   color: ${({ theme }) => theme.colors.text_color};
   transition-property: background-color, color;
+
   /* // 부드럽게 켜지지만 새로고침 했을 때 깜박거리는 현상이 있음
   transition-duration: .5s; */
+}
+
+input {
+  color: ${({ theme }) => theme.colors.text_color};
+  background-color: ${({ theme }) => theme.colors.background_color};
+  border: 1px solid #dee2e6;
+
 }
 
 button {

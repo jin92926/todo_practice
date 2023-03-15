@@ -1,35 +1,22 @@
+import TodoItem from "Components/TodoItem";
 import styled from "styled-components";
-
-import TodoItem from "./TodoItem";
-
-interface ITodoList {
-  id: number;
-  text: string;
-  done: boolean;
-}
+import { ITodoList } from "Types/todo";
 
 interface TodoListProps {
-  test: ITodoList[];
-  testData: () => void;
+  todo: ITodoList[];
+  getTodoList: () => Promise<void>;
 }
 
-const TodoListBlock = styled.div`
-  flex: 1;
-  padding: 20px 32px;
-  padding-bottom: 48px;
-  overflow-y: auto;
-`;
-
-const TodoList = ({ test, testData }: TodoListProps) => {
+const TodoList = ({ todo, getTodoList }: TodoListProps) => {
   return (
     <TodoListBlock>
-      {test.map((todo) => (
+      {todo.map(({ id, text, done }) => (
         <TodoItem
-          id={todo.id}
-          text={todo.text}
-          done={todo.done}
-          key={todo.id}
-          testData={testData}
+          key={id}
+          id={id}
+          text={text}
+          done={done}
+          getTodoList={getTodoList}
         />
       ))}
     </TodoListBlock>
@@ -37,3 +24,10 @@ const TodoList = ({ test, testData }: TodoListProps) => {
 };
 
 export default TodoList;
+
+const TodoListBlock = styled.div`
+  flex: 1;
+  padding: 20px 32px;
+  padding-bottom: 48px;
+  overflow-y: auto;
+`;

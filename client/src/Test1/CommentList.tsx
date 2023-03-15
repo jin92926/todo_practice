@@ -2,15 +2,16 @@ import React from "react";
 
 import CommentItem from "./CommentItem";
 
-const CommentList = ({ tests, onDelete, onUpdate }: any) => {
+const CommentList = ({ tests, testData }: any) => {
   return (
     <div>
-      {tests.map((comment: any) => (
+      {tests.map(({ id, text, done }: any) => (
         <CommentItem
-          key={comment.id}
-          comment={comment}
-          onDelete={onDelete}
-          onUpdate={onUpdate}
+          key={id}
+          id={id}
+          text={text}
+          done={done}
+          testData={testData}
         />
       ))}
     </div>

@@ -32,12 +32,11 @@ const Sample = () => {
     const id = lastId + 1; // 마지막으로 생성된 ID 값에 1을 더하여 새로운 ID 값을 생성
     const done = false; // 예시로 done을 false로 설정
     await postTest({ id, text: inputValue, done });
-    setLastId(id); // 마지막으로 생성된 ID 값을 업데이트
     testData();
     setInputValue("");
   };
-  console.log(inputValue);
-  const handleEdit = async (id: any, text: string) => {
+
+  const handleEdit = async ({ id, text }: any) => {
     await patchTest({ id, text });
     setEditingId("");
     testData();
@@ -86,7 +85,7 @@ const Sample = () => {
                   )
                 }
               />
-              <button type="button" onClick={() => handleEdit(id, text)}>
+              <button type="button" onClick={() => handleEdit({ id, text })}>
                 Save
               </button>
               <button type="button" onClick={handleCancelEdit}>
