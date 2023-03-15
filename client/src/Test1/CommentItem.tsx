@@ -1,19 +1,22 @@
+import { useTest } from "Hooks/test";
 import React, { useState } from "react";
 
-const CommentItem = ({ comment, onDelete, onUpdate }: any) => {
+const CommentItem = ({ id, text, done, testData }: any) => {
   const [editing, setEditing] = useState(false);
-  const [name, setName] = useState(comment.id);
-  const [content, setContent] = useState(comment.text);
+  const [content, setContent] = useState(text);
+  const { delTest, patchTest } = useTest();
 
-  const handleDelete = () => {
-    onDelete(comment.id);
+  const handleDelete = async ({ id }: any) => {
+    await delTest({ id });
+    testData();
   };
 
-  const handleUpdate = () => {
-    onUpdate(comment.id, comment.text);
+  const handleUpdate = async ({ id, content }: any) => {
+    await patchTest({ id, text: content });
     setEditing(false);
+    testData();
   };
-  // console.log(comment);
+
   return (
     <div>
       {editing ? (
@@ -23,7 +26,7 @@ const CommentItem = ({ comment, onDelete, onUpdate }: any) => {
             value={content}
             onChange={(e) => setContent(e.target.value)}
           />
-          <button type="button" onClick={() => handleUpdate()}>
+          <button type="button" onClick={() => handleUpdate({ id, content })}>
             수정
           </button>
           <button type="button" onClick={() => setEditing(false)}>
@@ -32,8 +35,8 @@ const CommentItem = ({ comment, onDelete, onUpdate }: any) => {
         </>
       ) : (
         <div onClick={() => setEditing(true)}>
-          <div>{comment.text}</div>
-          <button type="button" onClick={handleDelete}>
+          <div>{text}</div>
+          <button type="button" onClick={() => handleDelete({ id })}>
             Delete
           </button>
         </div>

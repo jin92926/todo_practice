@@ -33,5 +33,6 @@ export const useTest = () => {
     const res: any = await del(`memo/${id}`);
     return res;
   };
+
   return { getTest, delTest, postTest, patchTest, onTogle };
 };

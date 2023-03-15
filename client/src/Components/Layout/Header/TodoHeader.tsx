@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 interface TodoHeaderProps {
-  done: boolean[];
+  doneList: boolean[];
 }
 
-const TodoHeader = ({ done }: TodoHeaderProps) => {
+const TodoHeader = ({ doneList }: TodoHeaderProps) => {
   const today = new Date();
 
   const dateString = today.toLocaleString("ko-KR", {
@@ -14,7 +14,7 @@ const TodoHeader = ({ done }: TodoHeaderProps) => {
   });
 
   const dayName = today.toLocaleString("ko-KR", { weekday: "long" });
-  const undoneTasks = done.filter((val) => val === false);
+  const undoneTasks = doneList.filter((val) => val === false);
 
   return (
     <TodoHeadBlock>

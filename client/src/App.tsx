@@ -6,7 +6,6 @@ import Todo from "Pages/Todo/Todo";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import Comment from "Test1/Comment";
-import Sample1 from "Test2/com";
 
 const App = () => {
   return (
@@ -19,7 +18,6 @@ const App = () => {
             <Route path="/" element={<Main />} />
             <Route path="/todo" element={<Todo />} />
             <Route path="/comment" element={<Comment />} />
-            <Route path="/comment2" element={<Sample1 />} />
           </Routes>
         </Section>
         <Footer />
