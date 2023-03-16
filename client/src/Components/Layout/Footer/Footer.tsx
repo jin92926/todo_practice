@@ -27,7 +27,7 @@ const FooterContainer = styled.footer`
   align-items: center;
   justify-content: center;
   position: relative;
-  height: 150px;
+  height: 200px;
   box-shadow: lightgrey 0px -2px 2px;
   font-size: 23px;
   z-index: 1000;

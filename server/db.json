@@ -2,57 +2,32 @@
   "memo": [
     {
       "id": 17,
-      "text": "다시 한번!ㄴㅇㄹ",
-      "done": false
-    },
-    {
-      "id": 18,
-      "text": "sdf",
-      "done": false
-    },
-    {
-      "id": 19,
-      "text": "수정11",
-      "done": false
-    },
-    {
-      "id": 20,
-      "text": "qwdas",
-      "done": false
-    },
-    {
-      "id": 21,
-      "text": "sdf",
-      "done": false
-    },
-    {
-      "id": 22,
-      "text": "sdfef",
-      "done": false
-    },
-    {
-      "id": 23,
-      "text": "sf11",
-      "done": false
+      "text": "다시 한번!",
+      "done": true
     },
     {
       "id": 24,
-      "text": "sdfsdvsd",
+      "text": "ㄴㅇㄹㄷ",
       "done": false
     },
     {
       "id": 25,
-      "text": "sdfsd",
+      "text": "ㄴㅇㄹㄷ",
       "done": false
     },
     {
-      "id": 26,
-      "text": "111",
-      "done": false
+      "text": "ㄴㅇㄹㄷ",
+      "done": true,
+      "id": 26
     },
     {
-      "id": 27,
-      "text": "sdvsdvef",
+      "text": "뭐야 되네?",
+      "done": false,
+      "id": 27
+    },
+    {
+      "id": 28,
+      "text": "sdfs",
       "done": false
     }
   ]

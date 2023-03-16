@@ -1,4 +1,4 @@
-import TodoItem from "Components/TodoItem";
+import TodoItem from "Components/Todo/TodoItem";
 import styled from "styled-components";
 import { ITodoList } from "Types/todo";
 
