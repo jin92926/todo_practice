@@ -1,7 +1,8 @@
 import TodoHeader from "Components/Layout/Header/TodoHeader";
-import TodoCreate from "Components/TodoCreate";
-import TodoList from "Components/TodoList";
+import TodoCreate from "Components/Todo/TodoCreate";
+import TodoList from "Components/Todo/TodoList";
 import { useTodo } from "Hooks";
+import Calendar from "Pages/Calender/Calender";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ITodoList } from "Types/todo";
@@ -39,6 +40,19 @@ const Todo = () => {
 
 export default Todo;
 
+const Overlay = styled.div`
+  background-color: rgba(165, 144, 144, 0.5);
+  /* display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0; */
+`;
+
 const TodoTemplateBlock = styled.div`
   width: 70vh;
   height: 70vh;
@@ -51,5 +65,4 @@ const TodoTemplateBlock = styled.div`
   margin-bottom: 2rem;
   display: flex;
   flex-direction: column;
-  position: relative;
 `;

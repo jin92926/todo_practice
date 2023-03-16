@@ -1,5 +1,6 @@
 import Footer from "Components/Layout/Footer/Footer";
 import Header from "Components/Layout/Header/Header";
+import Calendar from "Pages/Calender/Calender";
 import Main from "Pages/Main/Main";
 import Sample from "Pages/sample";
 import Todo from "Pages/Todo/Todo";
@@ -17,6 +18,7 @@ const App = () => {
             <Route path="/sample" element={<Sample />} />
             <Route path="/" element={<Main />} />
             <Route path="/todo" element={<Todo />} />
+            <Route path="/calendar" element={<Calendar />} />
             <Route path="/comment" element={<Comment />} />
           </Routes>
         </Section>
