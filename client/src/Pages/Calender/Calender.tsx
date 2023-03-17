@@ -1,8 +1,10 @@
 import CalenderCells from "Components/Calender/CalenderCells";
 import CalenderDays from "Components/Calender/CalenderDays";
 import CalenderHeader from "Components/Calender/CalenderHeader";
+import Todo from "Pages/Todo/Todo";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { ICalender } from "Types/calender";
 
 const Calendar = () => {
   const today = new Date();
@@ -11,7 +13,8 @@ const Calendar = () => {
   const [month, setMonth] = useState(date.getMonth());
   const [year, setYear] = useState(date.getFullYear());
   const [startDay, setStartDay] = useState(getStartDayOfMonth(date));
-  console.log(date);
+  const [openTodo, SetOpenTodo] = useState(false);
+
   useEffect(() => {
     setDay(date.getDate());
     setMonth(date.getMonth());
@@ -24,16 +27,23 @@ const Calendar = () => {
     return startDate === 0 ? 7 : startDate;
   }
 
+  const ClickOpenTodo = ({ year, month, day }: ICalender) => {
+    SetOpenTodo(true);
+    setDate(new Date(year, month, day));
+  };
+
   return (
     <Frame>
       <CalenderHeader setDate={setDate} year={year} month={month} day={day} />
       <CalenderDays />
       <CalenderCells
-        setDate={setDate}
         year={year}
         month={month}
+        day={day}
         startDay={startDay}
+        ClickOpenTodo={ClickOpenTodo}
       />
+      {openTodo === true ? <Todo date={date} /> : ""}
     </Frame>
   );
 };

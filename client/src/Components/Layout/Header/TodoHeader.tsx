@@ -2,23 +2,23 @@ import styled from "styled-components";
 
 interface TodoHeaderProps {
   doneList: boolean[];
+  dateString: (useDate: Date) => string;
+  useDate: Date | undefined;
+  today: Date;
 }
 
-const TodoHeader = ({ doneList }: TodoHeaderProps) => {
-  const today = new Date();
-
-  const dateString = today.toLocaleString("ko-KR", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-
-  const dayName = today.toLocaleString("ko-KR", { weekday: "long" });
+const TodoHeader = ({
+  doneList,
+  dateString,
+  useDate,
+  today,
+}: TodoHeaderProps) => {
   const undoneTasks = doneList.filter((val) => val === false);
+  const dayName = useDate?.toLocaleString("ko-KR", { weekday: "long" });
 
   return (
     <TodoHeadBlock>
-      <h1>{dateString}</h1>
+      <h1>{dateString(useDate ?? today)}</h1>
       <div className="day">{dayName}</div>
       <TasksLeft>할 일 {undoneTasks.length}개 남음</TasksLeft>
     </TodoHeadBlock>

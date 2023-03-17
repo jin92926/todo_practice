@@ -1,7 +1,19 @@
+import React from "react";
 import uuid from "react-uuid";
 import styled from "styled-components";
+import { ICalender } from "Types/calender";
 
-const CalenderCells = ({ year, month, setDate, startDay }: any) => {
+interface CalenderCellsProps extends ICalender {
+  startDay: number;
+  ClickOpenTodo: ({ year, month, day }: ICalender) => void;
+}
+
+const CalenderCells = ({
+  year,
+  month,
+  startDay,
+  ClickOpenTodo,
+}: CalenderCellsProps) => {
   const DAYS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
   const DAYS_LEAP = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
   const days = isLeapYear(year) ? DAYS_LEAP : DAYS;
@@ -15,15 +27,22 @@ const CalenderCells = ({ year, month, setDate, startDay }: any) => {
       {Array(days[month] + startDay)
         .fill(null)
         .map((_, index) => {
-          const d = index - (startDay - 1);
+          const day = index - (startDay - 1);
           return (
             <Day
               key={uuid()}
               // isToday={d === today.getDate()}
               // isSelected={d === day}
-              onClick={() => setDate(new Date(year, month, d))}
+              onClick={() => ClickOpenTodo({ year, month, day })}
             >
-              {d > 0 ? d : ""}
+              {day > 0 ? (
+                <>
+                  {day}
+                  <div>dd</div>
+                </>
+              ) : (
+                ""
+              )}
             </Day>
           );
         })}
@@ -44,6 +63,7 @@ const Day = styled.div`
   width: 14.2%;
   height: 40px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   cursor: pointer;

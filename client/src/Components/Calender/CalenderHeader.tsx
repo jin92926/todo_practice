@@ -1,7 +1,12 @@
 import React from "react";
 import styled, { css } from "styled-components";
+import { ICalender } from "Types/calender";
 
-const CalenderHeader = ({ setDate, year, month, day }: any) => {
+interface CalenderHeaderProps extends ICalender {
+  setDate: React.Dispatch<React.SetStateAction<Date>>;
+}
+
+const CalenderHeader = ({ setDate, year, month, day }: CalenderHeaderProps) => {
   const MONTHS = [
     "JAN",
     "FEB",

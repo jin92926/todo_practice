@@ -3,7 +3,7 @@ import styled from "styled-components";
 const CalenderDays = () => {
   const DAYS_OF_THE_WEEK = ["Sun", "Mon", "Thu", "Wed", "Thrs", "Fri", "Sat"];
 
-  const days: any = DAYS_OF_THE_WEEK.map((day) => {
+  const days = DAYS_OF_THE_WEEK.map((day) => {
     return <Day key={day}>{day}</Day>;
   });
   return <Week>{days}</Week>;
