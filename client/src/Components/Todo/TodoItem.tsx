@@ -8,7 +8,10 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { ITodoList } from "Types/todo";
 
-interface TodoItemProps extends ITodoList {
+interface TodoItemProps {
+  id: number;
+  text: string;
+  done: boolean;
   getTodoList: () => Promise<void>;
 }
 
@@ -71,7 +74,6 @@ const TodoItem = ({ id, text, done, getTodoList }: TodoItemProps) => {
       ) : (
         <>
           <Text>{text}</Text>
-
           <Edit onClick={() => setEditing(true)}>
             <EditIcon />
             Fix

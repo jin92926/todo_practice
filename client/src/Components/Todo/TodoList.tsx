@@ -3,14 +3,14 @@ import styled from "styled-components";
 import { ITodoList } from "Types/todo";
 
 interface TodoListProps {
-  todo: ITodoList[];
+  todolist: ITodoList[];
   getTodoList: () => Promise<void>;
 }
 
-const TodoList = ({ todo, getTodoList }: TodoListProps) => {
+const TodoList = ({ todolist, getTodoList }: TodoListProps) => {
   return (
     <TodoListBlock>
-      {todo.map(({ id, text, done }) => (
+      {todolist.map(({ id, text, done }: any) => (
         <TodoItem
           key={id}
           id={id}

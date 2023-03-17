@@ -3,18 +3,23 @@ import { useTodo } from "Hooks";
 import React, { useState } from "react";
 import styled from "styled-components";
 
-const TodoCreate = ({ lastId }: any) => {
+interface ITodoCreateProps {
+  dateString: (useDate: Date) => string;
+  useDate: Date;
+}
+
+const TodoCreate = ({ useDate, dateString }: ITodoCreateProps) => {
   const { postTodo } = useTodo();
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
 
   const onToggle = () => setOpen(!open);
-  const onChange = (e: any) => setValue(e.target.value);
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setValue(e.target.value);
 
   const handleSubmit = () => {
-    const id = lastId + 1; // 마지막으로 생성된 ID 값에 1을 더하여 새로운 ID 값을 생성
     const done = false; // 예시로 done을 false로 설정
-    postTodo({ id, text: value, done });
+    postTodo({ text: value, done, createAt: dateString(useDate) });
     setValue("");
   };
 
@@ -22,7 +27,7 @@ const TodoCreate = ({ lastId }: any) => {
     <>
       {open && (
         <InsertFormPositioner>
-          <InsertForm onSubmit={handleSubmit}>
+          <InsertForm>
             <Input
               autoFocus
               onChange={onChange}
