@@ -1,3 +1,5 @@
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import PanoramaFishEyeIcon from "@mui/icons-material/PanoramaFishEye";
 import React from "react";
 import uuid from "react-uuid";
 import styled from "styled-components";
@@ -6,6 +8,7 @@ import { ICalender } from "Types/calender";
 interface CalenderCellsProps extends ICalender {
   startDay: number;
   ClickOpenTodo: ({ year, month, day }: ICalender) => void;
+  todo: any;
 }
 
 const CalenderCells = ({
@@ -13,6 +16,7 @@ const CalenderCells = ({
   month,
   startDay,
   ClickOpenTodo,
+  todo,
 }: CalenderCellsProps) => {
   const DAYS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
   const DAYS_LEAP = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -28,6 +32,16 @@ const CalenderCells = ({
         .fill(null)
         .map((_, index) => {
           const day = index - (startDay - 1);
+          const getDay = day > 0 ? `${year}년 ${month + 1}월 ${day}일` : "";
+
+          const todolist = todo.filter(
+            ({ createAt }: any) => getDay === createAt,
+          );
+          const done = todolist.filter(({ done }: any) => done === true).length;
+          const undone = todolist.filter(
+            ({ done }: any) => done === false,
+          ).length;
+
           return (
             <Day
               key={uuid()}
@@ -38,7 +52,18 @@ const CalenderCells = ({
               {day > 0 ? (
                 <>
                   {day}
-                  <div>dd</div>
+                  {todolist.length !== 0 ? (
+                    <>
+                      <Done>
+                        <CheckCircleOutlineIcon />: {done}개
+                      </Done>
+                      <NotDone>
+                        <PanoramaFishEyeIcon />: {undone}개
+                      </NotDone>
+                    </>
+                  ) : (
+                    ""
+                  )}
                 </>
               ) : (
                 ""
@@ -65,6 +90,20 @@ const Day = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   cursor: pointer;
+`;
+
+const Done = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 60px;
+`;
+
+const NotDone = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 60px;
 `;

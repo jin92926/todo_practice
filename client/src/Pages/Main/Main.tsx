@@ -1,9 +1,7 @@
 import React from "react";
 
 const Main = () => {
-  const dd = () => {
-    console.log("dsfs");
-  };
+  const dd = () => {};
 
   return <div onClick={dd}>Main</div>;
 };

@@ -5,15 +5,31 @@ import Todo from "Pages/Todo/Todo";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ICalender } from "Types/calender";
+import { ITodoList } from "Types/todo";
 
-const Calendar = () => {
-  const today = new Date();
-  const [date, setDate] = useState(today);
+interface ICalendarProps {
+  todo: ITodoList[];
+  getTodoList: () => Promise<void>;
+  dateString: any;
+  date: any;
+  setDate: any;
+  openTodo: any;
+  SetOpenTodo: any;
+}
+
+const Calendar = ({
+  todo,
+  getTodoList,
+  dateString,
+  date,
+  setDate,
+  openTodo,
+  SetOpenTodo,
+}: ICalendarProps) => {
   const [day, setDay] = useState(date.getDate());
   const [month, setMonth] = useState(date.getMonth());
   const [year, setYear] = useState(date.getFullYear());
   const [startDay, setStartDay] = useState(getStartDayOfMonth(date));
-  const [openTodo, SetOpenTodo] = useState(false);
 
   useEffect(() => {
     setDay(date.getDate());
@@ -42,8 +58,19 @@ const Calendar = () => {
         day={day}
         startDay={startDay}
         ClickOpenTodo={ClickOpenTodo}
+        todo={todo}
       />
-      {openTodo === true ? <Todo date={date} /> : ""}
+      {openTodo === true ? (
+        <Todo
+          date={date}
+          todo={todo}
+          getTodoList={getTodoList}
+          dateString={dateString}
+          SetOpenTodo={SetOpenTodo}
+        />
+      ) : (
+        ""
+      )}
     </Frame>
   );
 };

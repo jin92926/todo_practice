@@ -30,4 +30,5 @@ const TodoListBlock = styled.div`
   padding: 20px 32px;
   padding-bottom: 48px;
   overflow-y: auto;
+  max-height: 30rem;
 `;

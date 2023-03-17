@@ -1,40 +1,23 @@
 import TodoHeader from "Components/Layout/Header/TodoHeader";
 import TodoCreate from "Components/Todo/TodoCreate";
 import TodoList from "Components/Todo/TodoList";
-import { useTodo } from "Hooks";
-import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { ITodoList } from "Types/todo";
 
 interface IDate {
   date?: Date;
+  todo: ITodoList[];
+  getTodoList: () => Promise<void>;
+  dateString: any;
+  SetOpenTodo: any;
 }
 
-const Todo = ({ date }: IDate) => {
-  const { getTodo } = useTodo();
-  const [todo, setTodo] = useState<ITodoList[]>([]);
-
+const Todo = ({ date, todo, getTodoList, dateString, SetOpenTodo }: IDate) => {
   const today = new Date();
   const location = useLocation();
-  const useDate = location.pathname === "/calendar" ? date ?? today : today;
-  const dateString = (useDate: Date): string => {
-    return useDate.toLocaleString("ko-KR", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
-
-  // async는 항상 promise를 반환, 반환값이 없으므로 void
-  const getTodoList = async () => {
-    const data = await getTodo();
-    setTodo(data);
-  };
-
-  useEffect(() => {
-    getTodoList();
-  }, []);
+  const path = location.pathname;
+  const useDate = path === "/calendar" ? date ?? today : today;
 
   const todolist = todo.filter(
     ({ createAt }) => dateString(useDate) === createAt,
@@ -42,31 +25,84 @@ const Todo = ({ date }: IDate) => {
   const doneList = todolist.map((el) => el.done);
 
   return (
-    <TodoTemplateBlock>
-      <TodoHeader
-        doneList={doneList}
-        dateString={dateString}
-        useDate={useDate}
-        today={today}
-      />
-      <TodoList todolist={todolist} getTodoList={getTodoList} />
-      <TodoCreate useDate={useDate} dateString={dateString} />
-    </TodoTemplateBlock>
+    <Container>
+      <Background />
+      <ModalBlock>
+        <TodoHeader
+          doneList={doneList}
+          dateString={dateString}
+          useDate={useDate}
+          today={today}
+          path={path}
+          SetOpenTodo={SetOpenTodo}
+        />
+        <TodoList todolist={todolist} getTodoList={getTodoList} />
+        <TodoCreate useDate={useDate} dateString={dateString} />
+      </ModalBlock>
+    </Container>
   );
 };
 
 export default Todo;
 
-const TodoTemplateBlock = styled.div`
-  width: 70vh;
-  height: 70vh;
-  position: relative;
-  border: 2px solid rgb(202, 200, 200);
-  border-radius: 16px;
-  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.04);
-  margin: 0 auto;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+const Container = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
   flex-direction: column;
+  align-items: center;
+`;
+
+const Background = styled.div`
+  position: fixed;
+  width: 100%;
+  height: 100%;
+
+  backdrop-filter: blur(5px);
+  animation: modal-bg-show 0.5s;
+  @keyframes modal-bg-show {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+`;
+
+const ModalBlock = styled.div`
+  position: absolute;
+  top: 12rem;
+  border-radius: 10px;
+  padding: 1.5rem;
+
+  background-color: ${({ theme }) => theme.colors.background_color};
+  width: 60rem;
+  max-height: 50rem;
+  @media (max-width: 1120px) {
+    width: 50rem;
+  }
+  @media (max-width: 50rem) {
+    width: 80%;
+  }
+  min-height: 35rem;
+  /* animation: modal-show 1s; */
+  @keyframes modal-show {
+    from {
+      opacity: 0;
+      margin-top: -50px;
+    }
+    to {
+      opacity: 1;
+      margin-top: 0;
+    }
+  }
+
+  border: 1px solid lightgrey;
 `;
