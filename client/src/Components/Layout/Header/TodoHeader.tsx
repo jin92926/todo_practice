@@ -1,3 +1,4 @@
+import CloseIcon from "@mui/icons-material/Close";
 import styled from "styled-components";
 
 interface TodoHeaderProps {
@@ -5,6 +6,8 @@ interface TodoHeaderProps {
   dateString: (useDate: Date) => string;
   useDate: Date | undefined;
   today: Date;
+  path: string;
+  SetOpenTodo: any;
 }
 
 const TodoHeader = ({
@@ -12,13 +15,28 @@ const TodoHeader = ({
   dateString,
   useDate,
   today,
+  path,
+  SetOpenTodo,
 }: TodoHeaderProps) => {
   const undoneTasks = doneList.filter((val) => val === false);
   const dayName = useDate?.toLocaleString("ko-KR", { weekday: "long" });
 
+  const handleClose = () => {
+    SetOpenTodo(false);
+  };
+
   return (
     <TodoHeadBlock>
-      <h1>{dateString(useDate ?? today)}</h1>
+      <Title>
+        <h1>{dateString(useDate ?? today)}</h1>
+        {path === "/todo" ? (
+          ""
+        ) : (
+          <Close onClick={handleClose}>
+            <CloseIcon />
+          </Close>
+        )}
+      </Title>
       <div className="day">{dayName}</div>
       <TasksLeft>할 일 {undoneTasks.length}개 남음</TasksLeft>
     </TodoHeadBlock>
@@ -48,4 +66,14 @@ const TasksLeft = styled.div`
   font-size: 18px;
   margin-top: 40px;
   font-weight: bold;
+`;
+
+const Title = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const Close = styled.div`
+  cursor: pointer;
 `;
