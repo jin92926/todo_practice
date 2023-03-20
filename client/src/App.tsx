@@ -6,12 +6,13 @@ import Main from "Pages/Main/Main";
 import Todo from "Pages/Todo/Todo";
 import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { todoState } from "Store/todoStore";
 import styled from "styled-components";
-import { ITodoList } from "Types/todo";
 
 const App = () => {
   const { getTodo } = useTodo();
-  const [todo, setTodo] = useState<ITodoList[]>([]);
+  const [todo, setTodo] = useRecoilState(todoState); // recoil state 사용
   const today = new Date();
   const [date, setDate] = useState(today);
   const [openTodo, SetOpenTodo] = useState(false);
@@ -44,20 +45,13 @@ const App = () => {
             <Route
               path="/todo"
               element={
-                <Todo
-                  getTodoList={getTodoList}
-                  todo={todo}
-                  dateString={dateString}
-                  SetOpenTodo={SetOpenTodo}
-                />
+                <Todo dateString={dateString} SetOpenTodo={SetOpenTodo} />
               }
             />
             <Route
               path="/calendar"
               element={
                 <Calendar
-                  getTodoList={getTodoList}
-                  todo={todo}
                   dateString={dateString}
                   date={date}
                   setDate={setDate}

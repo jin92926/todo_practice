@@ -4,22 +4,9 @@ import CalenderHeader from "Components/Calender/CalenderHeader";
 import Todo from "Pages/Todo/Todo";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { ICalender } from "Types/calender";
-import { ITodoList } from "Types/todo";
-
-interface ICalendarProps {
-  todo: ITodoList[];
-  getTodoList: () => Promise<void>;
-  dateString: any;
-  date: any;
-  setDate: any;
-  openTodo: any;
-  SetOpenTodo: any;
-}
+import { ICalendarProps, ICalender } from "Types/calender";
 
 const Calendar = ({
-  todo,
-  getTodoList,
   dateString,
   date,
   setDate,
@@ -58,16 +45,9 @@ const Calendar = ({
         day={day}
         startDay={startDay}
         ClickOpenTodo={ClickOpenTodo}
-        todo={todo}
       />
       {openTodo === true ? (
-        <Todo
-          date={date}
-          todo={todo}
-          getTodoList={getTodoList}
-          dateString={dateString}
-          SetOpenTodo={SetOpenTodo}
-        />
+        <Todo date={date} dateString={dateString} SetOpenTodo={SetOpenTodo} />
       ) : (
         ""
       )}

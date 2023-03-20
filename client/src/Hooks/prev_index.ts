@@ -1,13 +1,13 @@
 import { ITodoList } from "Types/todo";
 import { del, get, patch, post } from "Utils/api";
 
-export const useTodo = () => {
-  const getTodo = async () => {
+export const useTodo2 = () => {
+  const getTodo2 = async () => {
     const data: ITodoList[] = await get("todo");
     return data;
   };
 
-  const postTodo = async ({
+  const postTodo2 = async ({
     text,
     done,
     createAt,
@@ -20,19 +20,19 @@ export const useTodo = () => {
     return res;
   };
 
-  const patchTodo = async ({ id, text }: Pick<ITodoList, "id" | "text">) => {
+  const patchTodo2 = async ({ id, text }: Pick<ITodoList, "id" | "text">) => {
     const res = await patch(`todo/${id}`, {
       text,
     });
     return res;
   };
 
-  const delTodo = async ({ id }: Pick<ITodoList, "id">) => {
+  const delTodo2 = async ({ id }: Pick<ITodoList, "id">) => {
     const res = await del(`todo/${id}`);
     return res;
   };
 
-  const onTogle = async ({ id, done }: Pick<ITodoList, "id" | "done">) => {
+  const onTogle2 = async ({ id, done }: Pick<ITodoList, "id" | "done">) => {
     const res = await patch(`todo/${id}`, {
       done,
     });
@@ -40,10 +40,10 @@ export const useTodo = () => {
   };
 
   return {
-    getTodo,
-    postTodo,
-    patchTodo,
-    delTodo,
-    onTogle,
+    getTodo2,
+    postTodo2,
+    patchTodo2,
+    delTodo2,
+    onTogle2,
   };
 };

@@ -2,41 +2,45 @@ import AddIcon from "@mui/icons-material/Add";
 import { useTodo } from "Hooks";
 import React, { useState } from "react";
 import styled from "styled-components";
-
-interface ITodoCreateProps {
-  dateString: (useDate: Date) => string;
-  useDate: Date;
-}
+import { ITodoCreateProps } from "Types/todo";
 
 const TodoCreate = ({ useDate, dateString }: ITodoCreateProps) => {
   const { postTodo } = useTodo();
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const onToggle = () => setOpen(!open);
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setValue(e.target.value);
 
-  const handleSubmit = () => {
-    const done = false; // 예시로 done을 false로 설정
-    postTodo({ text: value, done, createAt: dateString(useDate) });
-    setValue("");
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const trimmedValue = value.trim();
+    if (trimmedValue) {
+      const done = false;
+      postTodo({ text: trimmedValue, done, createAt: dateString(useDate) });
+      setValue("");
+      setErrorMessage("");
+      setOpen(false);
+    } else {
+      setErrorMessage("할 일을 입력해주세요");
+    }
   };
 
   return (
     <>
       {open && (
         <InsertFormPositioner>
-          <InsertForm>
+          <InsertForm onSubmit={handleSubmit}>
             <Input
               autoFocus
               onChange={onChange}
               value={value}
               placeholder="할 일을 입력 후, Enter/ Add 버튼을 누르세요"
             />
-            <button type="submit" onClick={handleSubmit}>
-              Add
-            </button>
+            {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+            <InputButton type="submit">Add</InputButton>
           </InsertForm>
         </InsertFormPositioner>
       )}
@@ -47,7 +51,7 @@ const TodoCreate = ({ useDate, dateString }: ITodoCreateProps) => {
   );
 };
 
-export default React.memo(TodoCreate);
+export default TodoCreate;
 
 const CircleButton = styled.button`
   background: #38d9a9;
@@ -88,7 +92,8 @@ const InsertFormPositioner = styled.div`
 
 const InsertForm = styled.form`
   display: flex;
-
+  justify-content: space-between;
+  align-items: center;
   padding-left: 32px;
   padding-top: 32px;
   padding-right: 32px;
@@ -103,8 +108,16 @@ const Input = styled.input`
   padding: 12px;
   border-radius: 4px;
   border: 1px solid #dee2e6;
-  width: 100%;
+  width: 70%;
   outline: none;
   font-size: 18px;
   box-sizing: border-box;
+`;
+
+const InputButton = styled.button`
+  cursor: pointer;
+`;
+
+const ErrorMessage = styled.div`
+  color: red;
 `;
