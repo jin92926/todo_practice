@@ -47,7 +47,7 @@ const NavContainer = styled.header`
   align-items: center;
   justify-content: space-between;
   height: 100px;
-  z-index: 5000;
+  z-index: 2000;
   border-top: 3px solid var(--main-yellow);
   box-shadow: 0px 2px 2px lightgray;
 `;

@@ -1,23 +1,19 @@
-import TodoHeader from "Components/Layout/Header/TodoHeader";
 import TodoCreate from "Components/Todo/TodoCreate";
+import TodoHeader from "Components/Todo/TodoHeader";
 import TodoList from "Components/Todo/TodoList";
 import { useLocation } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { todoState } from "Store/todoStore";
 import styled from "styled-components";
-import { ITodoList } from "Types/todo";
+import { IDate } from "Types/todo";
 
-interface IDate {
-  date?: Date;
-  todo: ITodoList[];
-  getTodoList: () => Promise<void>;
-  dateString: any;
-  SetOpenTodo: any;
-}
-
-const Todo = ({ date, todo, getTodoList, dateString, SetOpenTodo }: IDate) => {
+const Todo = ({ date, dateString, SetOpenTodo }: IDate) => {
   const today = new Date();
   const location = useLocation();
   const path = location.pathname;
   const useDate = path === "/calendar" ? date ?? today : today;
+  // useRecoilState 훅은 반환값으로 상태 값과 해당 상태 값을 업데이트하는 함수 둘을 포함한 배열을 반환
+  const [todo, setTodo] = useRecoilState(todoState);
 
   const todolist = todo.filter(
     ({ createAt }) => dateString(useDate) === createAt,
@@ -36,7 +32,7 @@ const Todo = ({ date, todo, getTodoList, dateString, SetOpenTodo }: IDate) => {
           path={path}
           SetOpenTodo={SetOpenTodo}
         />
-        <TodoList todolist={todolist} getTodoList={getTodoList} />
+        <TodoList todolist={todolist} />
         <TodoCreate useDate={useDate} dateString={dateString} />
       </ModalBlock>
     </Container>
@@ -77,10 +73,10 @@ const Background = styled.div`
 `;
 
 const ModalBlock = styled.div`
-  position: absolute;
-  top: 12rem;
-  border-radius: 10px;
-  padding: 1.5rem;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
   background-color: ${({ theme }) => theme.colors.background_color};
   width: 60rem;

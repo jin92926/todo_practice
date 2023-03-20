@@ -1,24 +1,19 @@
 import TodoItem from "Components/Todo/TodoItem";
 import styled from "styled-components";
-import { ITodoList } from "Types/todo";
+import { ITodoList, TodoListProps } from "Types/todo";
 
-interface TodoListProps {
-  todolist: ITodoList[];
-  getTodoList: () => Promise<void>;
-}
-
-const TodoList = ({ todolist, getTodoList }: TodoListProps) => {
+const TodoList = ({ todolist }: TodoListProps) => {
   return (
     <TodoListBlock>
-      {todolist.map(({ id, text, done }: any) => (
-        <TodoItem
-          key={id}
-          id={id}
-          text={text}
-          done={done}
-          getTodoList={getTodoList}
-        />
-      ))}
+      {todolist.length === 0 ? (
+        <div>할 일을 입력해보세요!</div>
+      ) : (
+        todolist.map(
+          ({ id, text, done }: Pick<ITodoList, "id" | "text" | "done">) => (
+            <TodoItem key={id} id={id} text={text} done={done} />
+          ),
+        )
+      )}
     </TodoListBlock>
   );
 };

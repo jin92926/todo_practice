@@ -1,28 +1,23 @@
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import PanoramaFishEyeIcon from "@mui/icons-material/PanoramaFishEye";
-import React from "react";
 import uuid from "react-uuid";
+import { useRecoilState } from "recoil";
+import { todoState } from "Store/todoStore";
 import styled from "styled-components";
-import { ICalender } from "Types/calender";
-
-interface CalenderCellsProps extends ICalender {
-  startDay: number;
-  ClickOpenTodo: ({ year, month, day }: ICalender) => void;
-  todo: any;
-}
+import { CalenderCellsProps } from "Types/calender";
 
 const CalenderCells = ({
   year,
   month,
   startDay,
   ClickOpenTodo,
-  todo,
 }: CalenderCellsProps) => {
+  const [todo, setTodo] = useRecoilState(todoState);
   const DAYS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
   const DAYS_LEAP = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
   const days = isLeapYear(year) ? DAYS_LEAP : DAYS;
 
-  function isLeapYear(year: any) {
+  function isLeapYear(year: number) {
     return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
   }
 
@@ -34,13 +29,9 @@ const CalenderCells = ({
           const day = index - (startDay - 1);
           const getDay = day > 0 ? `${year}년 ${month + 1}월 ${day}일` : "";
 
-          const todolist = todo.filter(
-            ({ createAt }: any) => getDay === createAt,
-          );
-          const done = todolist.filter(({ done }: any) => done === true).length;
-          const undone = todolist.filter(
-            ({ done }: any) => done === false,
-          ).length;
+          const todolist = todo.filter(({ createAt }) => getDay === createAt);
+          const done = todolist.filter(({ done }) => done === true).length;
+          const undone = todolist.filter(({ done }) => done === false).length;
 
           return (
             <Day

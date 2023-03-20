@@ -1,14 +1,6 @@
 import CloseIcon from "@mui/icons-material/Close";
 import styled from "styled-components";
-
-interface TodoHeaderProps {
-  doneList: boolean[];
-  dateString: (useDate: Date) => string;
-  useDate: Date | undefined;
-  today: Date;
-  path: string;
-  SetOpenTodo: any;
-}
+import { TodoHeaderProps } from "Types/todo";
 
 const TodoHeader = ({
   doneList,

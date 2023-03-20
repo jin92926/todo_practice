@@ -1,4 +1,9 @@
-import axios, { AxiosError, AxiosInstance, AxiosResponse } from "axios";
+import axios, {
+  AxiosError,
+  AxiosInstance,
+  AxiosRequestConfig,
+  AxiosResponse,
+} from "axios";
 
 const instance: AxiosInstance = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
@@ -15,7 +20,7 @@ const instance: AxiosInstance = axios.create({
   ],
 });
 
-const requestInterceptorFulfilled = (config: any) => {
+const requestInterceptorFulfilled = (config: AxiosRequestConfig) => {
   // add your custom logic here
   return config;
 };
@@ -38,20 +43,24 @@ instance.interceptors.response.use(
   responseInterceptorRejected,
 );
 
-export const get = <T>(url: string, config?: any) => {
+export const get = <T>(url: string, config?: AxiosRequestConfig) => {
   return instance.get<T, AxiosResponse<T>>(url, config).then((res) => res.data);
 };
-export const post = <T>(url: string, data?: any, config?: any) => {
+export const post = <T>(url: string, data?: T, config?: AxiosRequestConfig) => {
   return instance
     .post<T, AxiosResponse<T>>(url, data, config)
     .then((res) => res.data);
 };
-export const patch = <T>(url: string, data?: any, config?: any) => {
+export const patch = <T>(
+  url: string,
+  data?: T,
+  config?: AxiosRequestConfig,
+) => {
   return instance
     .patch<T, AxiosResponse<T>>(url, data, config)
     .then((res) => res.data);
 };
-export const del = <T>(url: string, config?: any) => {
+export const del = <T>(url: string, config?: AxiosRequestConfig) => {
   return instance
     .delete<T, AxiosResponse<T>>(url, config)
     .then((res) => res.data);

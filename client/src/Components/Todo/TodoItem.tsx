@@ -4,18 +4,15 @@ import DoneIcon from "@mui/icons-material/Done";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 import { useTodo } from "Hooks";
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { ITodoList } from "Types/todo";
 
-interface TodoItemProps {
-  id: number;
-  text: string;
-  done: boolean;
-  getTodoList: () => Promise<void>;
-}
-
-const TodoItem = ({ id, text, done, getTodoList }: TodoItemProps) => {
+const TodoItem = ({
+  id,
+  text,
+  done,
+}: Pick<ITodoList, "id" | "text" | "done">) => {
   const { patchTodo, onTogle, delTodo } = useTodo();
   const [content, setContent] = useState(text);
   const [editing, setEditing] = useState(false);
@@ -29,7 +26,7 @@ const TodoItem = ({ id, text, done, getTodoList }: TodoItemProps) => {
   }) => {
     await patchTodo({ id, text: content });
     setEditing(false);
-    getTodoList();
+    // getTodoList();
   };
 
   const handleChangeDone = async ({
@@ -37,12 +34,11 @@ const TodoItem = ({ id, text, done, getTodoList }: TodoItemProps) => {
     done,
   }: Pick<ITodoList, "id" | "done">) => {
     await onTogle({ id, done: !done });
-    getTodoList();
+    // getTodoList();
   };
 
   const handleDelete = async ({ id }: Pick<ITodoList, "id">) => {
     await delTodo({ id });
-    getTodoList();
   };
 
   const handleClose = () => {
@@ -88,7 +84,7 @@ const TodoItem = ({ id, text, done, getTodoList }: TodoItemProps) => {
   );
 };
 
-export default React.memo(TodoItem);
+export default TodoItem;
 
 const Edit = styled.div`
   display: flex;
