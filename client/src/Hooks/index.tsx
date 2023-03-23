@@ -30,13 +30,8 @@ export const useTodo = () => {
     // todo 상태 업데이트
     // setTodo((prev): any => [...prev, res]);
     setTodo((prev): ITodoList[] => {
-      const newTodo = {
-        text: res.text,
-        done: res.done,
-        createAt: res.createAt,
-        //! 연산자를 사용하여 res.id가 항상 존재함을 강제할 수도 있음, 만약 res.id가 undefined일 경우 에러
-        id: res.id ?? 0,
-      };
+      // 응답 데이터 res를 각각 부르기보다 객체 전체를 넘겨 받는게 좋음
+      const newTodo = { ...res, id: res.id ?? 0 };
       return [...prev, newTodo];
     });
   };
@@ -46,10 +41,9 @@ export const useTodo = () => {
       id,
       text,
     });
-    console.log(res);
+
     const updatedTodo = {
-      id: res.id,
-      text: res.text,
+      ...res,
       done: res.done ?? false,
       createAt: res.createAt ?? "",
     };
@@ -68,7 +62,6 @@ export const useTodo = () => {
   const delTodo = async ({ id }: Pick<ITodoList, "id">) => {
     // 비동기 함수이기 때문에, await 키워드로 인해 return문 없어도 Promise를 반환
     await del(`todo/${id}`);
-
     // todo 상태 업데이트
     setTodo((prev) => prev.filter((item) => item.id !== id));
   };
@@ -80,20 +73,14 @@ export const useTodo = () => {
     });
 
     const updatedTodo = {
-      id: res.id,
+      ...res,
       text: res.text ?? "",
-      done: res.done,
       createAt: res.createAt ?? "",
     };
 
     // todo 상태 업데이트
     setTodo((prev): ITodoList[] =>
-      prev.map((item) => {
-        if (item.id === id) {
-          return updatedTodo;
-        }
-        return item;
-      }),
+      prev.map((item) => (item.id === id ? updatedTodo : item)),
     );
   };
 
